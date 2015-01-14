@@ -13,6 +13,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'maven'
 
 jar {
     baseName = 'gs-scheduling-tasks'
@@ -32,4 +33,17 @@ dependencies {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
+}
+
+uploadArchives {
+    repositories {
+       mavenDeployer {
+             repository(url: "http://192.168.88.147:8081/nexus/content/repositories/snapshots") {
+             authentication(userName: "admin", password: "admin123")
+}
+             pom.version = "1.0-SNAPSHOT"
+             pom.artifactId = "simple-project"
+             pom.groupId = "com.example"
+       }
+    }
 }
