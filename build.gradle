@@ -21,7 +21,7 @@ group='mygroup'
 
 if(project.hasProperty("release")){
     rel = 'releases'
-    version = '0.1.0'
+    version = '0.1.1'
 }
 else {
     rel = 'snapshots'
@@ -31,7 +31,7 @@ else {
 
 jar {
     baseName = 'gs-scheduling-tasks'
-    version =  '0.1.0'
+    version =  '0.1.1'
 }
 
 repositories {
