@@ -17,7 +17,17 @@ apply plugin: 'maven'
 apply plugin: 'application'
 
 group='mygroup'
-version='SNAPSHOT'
+
+
+if(project.hasProperty("release")){
+    rel = 'releases'
+    version = '0.1.0'
+}
+else {
+    rel = 'snapshots'
+    version='SNAPSHOT'
+}
+
 
 jar {
     baseName = 'gs-scheduling-tasks'
@@ -39,37 +49,20 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }
 
+
 uploadArchives {
-    repositories {
-       mavenDeployer {
-            repository(url: "http://192.168.88.148:8081/nexus/content/repositories/snapshots") {
-             authentication(userName: "admin", password: "admin123")
-            }
-             pom.project {
-            parent {
-               groupId 'io.spring.platform'
-               artifactId 'platform-bom'
-               version '1.0.2.RELEASE'
-            }
-         }
-       }
-    }
-}
-
-
-uploadArchivesRelease {
-    repositories {
-       mavenDeployer {
-            repository(url: "http://192.168.88.148:8081/nexus/content/repositories/releases") {
-             authentication(userName: "admin", password: "admin123")
-            }
-             pom.project {
-            parent {
-               groupId 'io.spring.platform'
-               artifactId 'platform-bom'
-               version '1.0.2.RELEASE'
-            }
-         }
-       }
-    }
+        repositories {
+           mavenDeployer {
+                repository(url: "http://192.168.88.148:8081/nexus/content/repositories/" + rel) {
+                 authentication(userName: "admin", password: "admin123")
+                }
+                 pom.project {
+                parent {
+                   groupId 'io.spring.platform'
+                   artifactId 'platform-bom'
+                   version '1.0.2.RELEASE'
+                }
+             }
+           }
+        }
 }
